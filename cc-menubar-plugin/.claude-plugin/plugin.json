@@ -1,0 +1,5 @@
+{
+  "name": "cc-menubar-plugin",
+  "description": "Status reporting for ccMenuBar - monitors Claude Code activity",
+  "version": "0.0.1"
+}
