@@ -1,0 +1,20 @@
+{
+  "name": "ccMenuBar",
+  "owner": {
+    "name": "mstachniuk"
+  },
+  "metadata": {
+    "description": "macOS menu bar app that monitors Claude Code session activity"
+  },
+  "plugins": [
+    {
+      "name": "cc-menubar-plugin",
+      "source": "./cc-menubar-plugin",
+      "description": "Status reporting for ccMenuBar - monitors Claude Code activity",
+      "version": "0.0.1",
+      "repository": "https://github.com/mstachniuk/ccMenuBar",
+      "license": "MIT",
+      "keywords": ["menubar", "status", "monitoring"]
+    }
+  ]
+}
