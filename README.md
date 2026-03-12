@@ -26,10 +26,9 @@ A macOS menu bar app that monitors all running Claude Code instances and shows b
 Install the plugin using the Claude Code CLI:
 
 ```sh
-claude plugin add "$(PWD)/ccMenuBar/cc-menubar-plugin"
+claude plugin marketplace add mstachniuk/ccMenuBar
+claude plugin install cc-menubar-plugin
 ```
-
-This registers the hook scripts from `cc-menubar-plugin/` as a Claude Code plugin. The hooks listen for `SessionStart`, `PreToolUse`, `PostToolUse`, `Notification`, `Stop`, and `SessionEnd` events. Each hook writes a JSON status file to `~/.claude/ccMenuBar/sessions/`.
 
 To verify the plugin is installed:
 
