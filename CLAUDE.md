@@ -65,9 +65,21 @@ JSONL mtime poll  ──→     │
 - Status enum (`SessionStatus`) has `Comparable` conformance for sort-by-priority (busy → active → idle → stale)
 - `ClaudeSession.source` distinguishes `.plugin` vs `.fallback` origin to avoid deduplication conflicts
 
-## Plugin Installation
+## Plugin Hook Events
+
+The plugin maps Claude Code hook events to session statuses in `update-status.sh`:
+- `PreToolUse`, `PostToolUse` → `busy`
+- `SessionStart` → `active`
+- `Stop`, `Notification` (idle_prompt) → `idle`
+- `SessionEnd` → triggers `remove-session.sh` (deletes session file)
+
+Hook registrations are defined in `cc-menubar-plugin/hooks/hooks.json`. Plugin metadata lives in `cc-menubar-plugin/.claude-plugin/plugin.json`.
+
+## Plugin Installation (via Marketplace)
 
 ```sh
-./install.sh        # Copies scripts to ~/.claude/ccMenuBar/scripts/, merges hooks into ~/.claude/settings.json
-./uninstall.sh      # Removes hooks and scripts (preserves session data)
+claude plugin marketplace add mstachniuk/ccMenuBar   # Register in marketplace
+claude plugin install cc-menubar-plugin               # Install locally
+claude plugin list                                    # Verify
+claude plugin remove cc-menubar-plugin                # Uninstall
 ```

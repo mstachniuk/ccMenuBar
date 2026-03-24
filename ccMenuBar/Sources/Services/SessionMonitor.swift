@@ -105,7 +105,7 @@ final class SessionMonitor {
             &context,
             pathsToWatch,
             FSEventStreamEventId(kFSEventStreamEventIdSinceNow),
-            0.3, // 300ms latency
+            0.1, // 100ms latency
             flags
         ) else { return }
 

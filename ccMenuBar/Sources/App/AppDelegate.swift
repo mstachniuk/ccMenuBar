@@ -69,16 +69,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Icon Animation
 
     private func startBusyObservation() {
-        // Poll for busy state changes every 0.5s (aligned with animation)
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
-            guard let self else { return }
-            let busy = self.viewModel.hasAnyBusySession
-            if busy && self.animationTimer == nil {
-                self.startAnimation()
-            } else if !busy && self.animationTimer != nil {
-                self.stopAnimation()
+        // Use withObservationTracking for immediate reaction to busy state changes
+        func observe() {
+            withObservationTracking {
+                let busy = self.viewModel.hasAnyBusySession
+                if busy && self.animationTimer == nil {
+                    self.startAnimation()
+                } else if !busy && self.animationTimer != nil {
+                    self.stopAnimation()
+                }
+            } onChange: {
+                DispatchQueue.main.async { observe() }
             }
         }
+        observe()
     }
 
     private func startAnimation() {
