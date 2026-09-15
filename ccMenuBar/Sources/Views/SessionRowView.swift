@@ -3,7 +3,7 @@ import SwiftUI
 struct SessionRowView: View {
     let session: ClaudeSession
     var subagentCount: Int = 0
-    @State private var isPulsing = false
+    @ViewState private var isPulsing = false
 
     var body: some View {
         HStack(spacing: 10) {

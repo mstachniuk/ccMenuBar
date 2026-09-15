@@ -64,6 +64,7 @@ JSONL mtime poll  ──→     │
 - FSEvents via CoreFoundation C API (`FSEventStreamRef`) with `Unmanaged` pointer bridging for the callback
 - Status enum (`SessionStatus`) has `Comparable` conformance for sort-by-priority (busy → active → idle → stale)
 - `ClaudeSession.source` distinguishes `.plugin` vs `.fallback` origin to avoid deduplication conflicts
+- Views use `@ViewState` (`Sources/Views/ViewState.swift`), **not** `@State` — `@State` is a macro in the macOS 26+ SDKs and its `SwiftUIMacros` plugin ships only with Xcode.app, so `@State` breaks `swift build` under the Command Line Tools
 
 ## Plugin Hook Events
 

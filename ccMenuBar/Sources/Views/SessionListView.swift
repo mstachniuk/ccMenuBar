@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SessionListView: View {
     let viewModel: MenuBarViewModel
-    @State private var showStale = false
+    @ViewState private var showStale = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
