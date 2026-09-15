@@ -13,6 +13,18 @@ final class MenuBarViewModel {
         monitor.sessions.filter { $0.status != .stale }
     }
 
+    var rootActiveSessions: [ClaudeSession] {
+        let activeIds = Set(activeSessions.map(\.id))
+        return activeSessions.filter { session in
+            guard let parentId = session.parentId else { return true }
+            return !activeIds.contains(parentId)
+        }
+    }
+
+    func subagents(for sessionId: String) -> [ClaudeSession] {
+        activeSessions.filter { $0.parentId == sessionId }
+    }
+
     var staleSessions: [ClaudeSession] {
         monitor.sessions.filter { $0.status == .stale }
     }

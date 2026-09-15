@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SessionRowView: View {
     let session: ClaudeSession
+    var subagentCount: Int = 0
     @State private var isPulsing = false
 
     var body: some View {
@@ -32,6 +33,16 @@ struct SessionRowView: View {
                             .background(Color.secondary.opacity(0.15))
                             .clipShape(RoundedRectangle(cornerRadius: 3))
                             .lineLimit(1)
+                    }
+
+                    if subagentCount > 0 {
+                        Text("\(subagentCount)")
+                            .font(.caption2)
+                            .padding(.horizontal, 5)
+                            .padding(.vertical, 1)
+                            .background(Color.orange.opacity(0.2))
+                            .foregroundStyle(.orange)
+                            .clipShape(RoundedRectangle(cornerRadius: 3))
                     }
                 }
 

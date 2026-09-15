@@ -10,6 +10,7 @@ struct ClaudeSession: Identifiable, Equatable {
     var toolName: String?
     var timestamp: Date
     var source: SessionSource
+    var parentId: String?
 
     enum SessionSource: Equatable {
         case plugin    // From cc-menubar-plugin status files

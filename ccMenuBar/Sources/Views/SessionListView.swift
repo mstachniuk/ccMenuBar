@@ -36,9 +36,11 @@ struct SessionListView: View {
             } else {
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 0) {
-                        ForEach(viewModel.activeSessions) { session in
-                            SessionRowView(session: session)
-                            if session.id != viewModel.activeSessions.last?.id {
+                        ForEach(viewModel.rootActiveSessions) { session in
+                            let subagents = viewModel.subagents(for: session.id)
+                            SessionRowView(session: session, subagentCount: subagents.count)
+                            subagentTreeRows(subagents: subagents)
+                            if session.id != viewModel.rootActiveSessions.last?.id {
                                 Divider().padding(.leading, 26)
                             }
                         }
@@ -90,5 +92,33 @@ struct SessionListView: View {
             }
         }
         .frame(width: 320)
+    }
+
+    @ViewBuilder
+    private func subagentTreeRows(subagents: [ClaudeSession]) -> some View {
+        if !subagents.isEmpty {
+            let maxVisible = 3
+            let visible = Array(subagents.prefix(maxVisible))
+            let remaining = subagents.count - maxVisible
+
+            ForEach(Array(visible.enumerated()), id: \.element.id) { index, subagent in
+                let isLast = index == visible.count - 1 && remaining <= 0
+                SubagentRowView(session: subagent, isLast: isLast)
+            }
+
+            if remaining > 0 {
+                HStack(spacing: 0) {
+                    Text("└")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                        .frame(width: 20)
+                        .padding(.leading, 16)
+                    Text("+\(remaining) more (\(subagents.count) total)")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                }
+                .padding(.vertical, 2)
+            }
+        }
     }
 }

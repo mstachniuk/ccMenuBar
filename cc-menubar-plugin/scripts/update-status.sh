@@ -18,6 +18,7 @@ SESSION_ID=$(extract_json_string "session_id")
 CWD=$(extract_json_string "cwd")
 HOOK_EVENT=$(extract_json_string "hook_event_name")
 TOOL_NAME=$(extract_json_string "tool_name")
+PARENT_SESSION_ID=$(extract_json_string "parent_session_id")
 
 if [ -z "$SESSION_ID" ]; then
   exit 0
@@ -50,6 +51,7 @@ cat > "$TMPFILE" <<EOF
   "cwd": "${CWD}",
   "last_event": "${HOOK_EVENT}",
   "tool_name": "${TOOL_NAME}",
+  "parent_session_id": "${PARENT_SESSION_ID}",
   "timestamp": "${TIMESTAMP}"
 }
 EOF

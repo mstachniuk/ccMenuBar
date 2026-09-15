@@ -8,6 +8,7 @@ enum StatusFileReader {
         let cwd: String
         let last_event: String
         let tool_name: String
+        let parent_session_id: String?
         let timestamp: String
     }
 
@@ -29,6 +30,8 @@ enum StatusFileReader {
         let projectName = ProjectNameResolver.resolve(fromPath: status.cwd)
         let gitBranch = ProjectNameResolver.gitBranch(at: status.cwd)
 
+        let parentId = status.parent_session_id.flatMap { $0.isEmpty ? nil : $0 }
+
         return ClaudeSession(
             id: status.session_id,
             status: sessionStatus,
@@ -38,7 +41,8 @@ enum StatusFileReader {
             lastEvent: status.last_event,
             toolName: status.tool_name.isEmpty ? nil : status.tool_name,
             timestamp: timestamp,
-            source: .plugin
+            source: .plugin,
+            parentId: parentId
         )
     }
 
